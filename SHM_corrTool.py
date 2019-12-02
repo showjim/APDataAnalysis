@@ -112,6 +112,8 @@ def processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,dict_keyword):
     interval_columns=20
     iColumn=(siteCnt-1)*interval_columns
     for line in file.readlines():
+        if ('VBT error' in line):
+            continue
         if (dict_keyword['Item'] in line)  :
             each_item_info.append(line)
             flag=1
