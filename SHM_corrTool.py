@@ -90,16 +90,20 @@ def getDatalogInfo(TER_flag,ADV_flag):
         for each_site in sites_TER:
             siteCnt = siteCnt + 1
             processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,TER_keyword)
+
     index=0
     for each_file in ADV_files:
         for each_site in str_sites_ADV[index].split(','):
             sites_ADV = str_sites_ADV[index].split(',')
             siteCnt = siteCnt + 1
             processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,ADV_keyword)
+    
+    time_flag = (time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime(time.time())))
+    xls.save(os.getcwd() + '/shmplot_'+time_flag+'.xlsx')
 
 def processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,dict_keyword):
 
-    time_flag = (time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime(time.time())))
+    #time_flag = (time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime(time.time())))
     flag=0
     startPlot=0
     site_flag=0
@@ -179,7 +183,7 @@ def processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,dict_keyword):
             elif  dict_keyword['Platform']=='ADV':
                 iRow = iRow + int(ADV_keyword['RowOffset'])
 
-    xls.save(os.getcwd() + '/shmplot_'+time_flag+'.xlsx')
+    #xls.save(os.getcwd() + '/shmplot_'+time_flag+'.xlsx')
 
 
 def getAllSiteNums(each_file):
