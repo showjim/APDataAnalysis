@@ -2,4 +2,4 @@
 #delimiter: $__
 #xxx(TER/ADV/...)_xxx(key word for test item)_xxx(key word for site num)_xxx(key word for pattern name)_xxx(key word for shm start)
 TER$__SHM:$__Site: $__Cur_Pat_Name:$__Tcoef(%)$__:Vcoef(%)$__1
-#ADV$__Testsuite Shmoo:$__Site: $__Pattern name:$__Tcoef$__shmoo_matrix_end$__0
+ADV$___SHMOO:$__DEVICE_NUMBER: $__current pattern_name:$__(Tcoef unit: )$__(Vcoef unit: V)$__1$__\.$__\d+

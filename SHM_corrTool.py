@@ -1,7 +1,7 @@
 # -*- coding=utf-8 -*-
 import os
 import tkinter.filedialog
-
+import re
 import time
 import openpyxl
 from openpyxl.styles import PatternFill  #, Border, Side, Alignment, Protection, Font,fills,colors
@@ -15,8 +15,8 @@ def getKeyWordFromSettingFile():
     SettingFilePath=os.getcwd()+"\settings\key_word_definition.txt"
     print (SettingFilePath)
     #format:  Platform$__SiteNum$__PatName$__PlotStart
-    TER_keyword={'Platform':'','Item':'','SiteNum':'','PatName':'','PlotStart':'','PlotEnd':'','RowOffset':''}
-    ADV_keyword = {'Platform': '','Item': '','SiteNum': '','PatName': '','PlotStart': '','PlotEnd': '','RowOffset':''}
+    TER_keyword={'Platform':'','Item':'','SiteNum':'','PatName':'','PlotStart':'','PlotEnd':'','RowOffset':'','PassSymbol':'','FailSymbol':''}
+    ADV_keyword = {'Platform': '','Item': '','SiteNum': '','PatName': '','PlotStart': '','PlotEnd': '','RowOffset':'','PassSymbol':'','FailSymbol':''}
     keyword=[]
 
     file=open(SettingFilePath,'r',encoding='utf-8')
@@ -33,6 +33,11 @@ def getKeyWordFromSettingFile():
                 TER_keyword['PlotStart'] = keyword[4]
                 TER_keyword['PlotEnd'] = keyword[5]
                 TER_keyword['RowOffset'] = keyword[6]
+                TER_keyword['PassSymbol'] = 'P'# keyword[7]
+                TER_keyword['FailSymbol'] = '.'# keyword[8]
+                if len(keyword) == 9:
+                    TER_keyword['PassSymbol'] = keyword[7]
+                    TER_keyword['FailSymbol'] = keyword[8]
                 #print(TER_keyword)
             if keyword[0]=='ADV':
                 ADV_keyword['Platform'] = keyword[0]
@@ -42,6 +47,11 @@ def getKeyWordFromSettingFile():
                 ADV_keyword['PlotStart'] = keyword[4]
                 ADV_keyword['PlotEnd'] = keyword[5]
                 ADV_keyword['RowOffset'] = keyword[6]
+                ADV_keyword['PassSymbol'] = 'P'  # keyword[7]
+                ADV_keyword['FailSymbol'] = '.'  # keyword[8]
+                if len(keyword) == 9:
+                    ADV_keyword['PassSymbol'] = keyword[7]
+                    ADV_keyword['FailSymbol'] = keyword[8]
                 #print(ADV_keyword)
 
 def getDatalogInfo(TER_flag,ADV_flag):
@@ -135,12 +145,13 @@ def processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,dict_keyword):
             if (dict_keyword['SiteNum']+str(each_site)) in line and flag==1  :
                 each_item_info.append(line)
                 site_flag = 1
-            if (dict_keyword['PatName'] in line  and flag==1 and site_flag==1 ) :
+            if (dict_keyword['PatName'] in line  and flag==1): # and site_flag==1 ) :
                 each_item_info.append(line)
         if (dict_keyword['PlotStart'] == line.strip()  and flag==1 and site_flag==1) :
             startPlot=1
         if startPlot==1 and flag==1 and site_flag==1:
-            each_plot.append(line)
+            if line != '\n':
+                each_plot.append(line)
         if  (dict_keyword['PlotEnd'] in line and flag==1 and startPlot==1 and site_flag==1) :
             xls[shtName].cell(row=1, column=(siteCnt-1)*interval_columns + 1, value=each_file)
             for tmpstr in each_item_info:
@@ -153,6 +164,17 @@ def processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,dict_keyword):
                 iColumn = (siteCnt-1)*interval_columns
                 tmpstr = each_plot_line.split('\t')
                 tmpstr = each_plot_line.split()
+                if dict_keyword['Platform']=='ADV' and not(ADV_keyword['PlotEnd'] in each_plot_line):
+                    pass #ADV_keyword['FailSymbol']
+                    for i in range(1, len(tmpstr)):
+                        tmp = tmpstr[i]
+                        text_pass = ADV_keyword['PassSymbol']
+                        text_fail = ADV_keyword['FailSymbol']
+                        if re.match(text_pass, tmp) != None:
+                            tmpstr[i] = 'P'
+                        if re.match(text_fail, tmp) != None:
+                            tmpstr[i] = '.'
+
                 for x in tmpstr:
                     xls[shtName].cell(row=iRow + 1, column=iColumn + 1, value=x)
                     if x=='P':
