@@ -1,5 +1,6 @@
 #format instruction: xxx$__xxx$__xxx$__xxx
 #delimiter: $__
 #xxx(TER/ADV/...)_xxx(key word for test item)_xxx(key word for site num)_xxx(key word for pattern name)_xxx(key word for shm start)
-TER$__SHM:$__Site: $__Cur_Pat_Name:$__Tcoef(%)$__:Vcoef(%)$__1
-ADV$___SHMOO:$__DEVICE_NUMBER: $__current pattern_name:$__(Tcoef unit: )$__(Vcoef unit: V)$__1$__\.$__\d+
+#TER$__SHM:$__Site: $__Cur_Pat_Name:$__Tcoef(%)$__:Vcoef(%)$__1
+TER$__PM:$__Site: $__Pat_Name:$__PM Results :$__:Roff(ns)$__1
+#ADV$___SHMOO:$__DEVICE_NUMBER: $__current pattern_name:$__(Tcoef unit: )$__(Vcoef unit: V)$__1$__\.$__\d+
