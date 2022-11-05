@@ -131,18 +131,18 @@ def processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,dict_keyword):
         if (dict_keyword['Item'] in line)  :
             each_item_info.append(line)
             flag=1
-        if  (dict_keyword['SiteNum'] in line and not ((dict_keyword['SiteNum']+str(each_site)) in line) and flag==1) :
+        if  (dict_keyword['SiteNum'] in line and not ((dict_keyword['SiteNum']+str(each_site)) == line[:-1]) and flag==1) :
             each_item_info=[]
             site_flag=0
 
         if dict_keyword['Platform']=='TER':
-            if (dict_keyword['SiteNum']+str(each_site)) in line and flag==1  :
+            if (dict_keyword['SiteNum']+str(each_site)) == line[:-1] and flag==1  :
                 each_item_info.append(line)
                 site_flag=1
             if (dict_keyword['PatName'] in line  and flag==1 and site_flag==1) :
                 each_item_info.append(line)
         elif dict_keyword['Platform']=='ADV':
-            if (dict_keyword['SiteNum']+str(each_site)) in line and flag==1  :
+            if (dict_keyword['SiteNum']+str(each_site)) == line[:-1] and flag==1  :
                 each_item_info.append(line)
                 site_flag = 1
             if (dict_keyword['PatName'] in line  and flag==1): # and site_flag==1 ) :
