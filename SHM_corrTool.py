@@ -147,7 +147,7 @@ def processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,dict_keyword):
                 site_flag = 1
             if (dict_keyword['PatName'] in line  and flag==1): # and site_flag==1 ) :
                 each_item_info.append(line)
-        if (dict_keyword['PlotStart'] in line.strip()  and flag==1 and site_flag==1) :
+        if (re.match(dict_keyword['PlotStart'], line.strip()) != None  and flag==1 and site_flag==1) :#(dict_keyword['PlotStart'] in line.strip()  and flag==1 and site_flag==1) :
             startPlot=1
         if startPlot==1 and flag==1 and site_flag==1:
             if line != '\n':

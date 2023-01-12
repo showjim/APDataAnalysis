@@ -4,4 +4,5 @@
 #TER$__SHM:$__Site: $__Cur_Pat_Name:$__Tcoef(%)$__:Vcoef(%)$__1
 #ADV$__Test Suite Name = $__DEVICE_NUMBER:$__Pattern =$__Tcoef()$__Vcoef()$__1$__\.$__\d+ #for customise plot symbol
 #TER$__SHM:$__Site: $__Cur_Pat_Name:$__Tcoef(%)$__:Vcoef(%)$__1
-TER$__Test Suite Name = $__DEVICE_NUMBER: $__Pattern = $__Tcoef(%)$__Vcoef(%)$__1$__P$__\.
+#ADV$__Test Suite Name = $__DEVICE_NUMBER:$__Pattern =$__Tcoef()$__Vcoef()$__1$__P$__\.
+ADV$__SHMOO_RESULT$__Site Number   : $__Label Name    : $__per_50|var$__Vcoef$__1$__P$__\.
