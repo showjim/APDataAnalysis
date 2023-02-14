@@ -139,7 +139,7 @@ def processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,dict_keyword):
             if (dict_keyword['SiteNum']+str(each_site)) == line[:-1] and flag==1  :
                 each_item_info.append(line)
                 site_flag=1
-            if (dict_keyword['PatName'] in line  and flag==1 and site_flag==1) :
+            if (dict_keyword['PatName'] in line  and flag==1): #and site_flag==1
                 each_item_info.append(line)
         elif dict_keyword['Platform']=='ADV':
             if (dict_keyword['SiteNum']+str(each_site)) == line[:-1] and flag==1  :
@@ -147,7 +147,7 @@ def processLog(each_file,each_site,xls,siteCnt,totalsiteCnt,dict_keyword):
                 site_flag = 1
             if (dict_keyword['PatName'] in line  and flag==1): # and site_flag==1 ) :
                 each_item_info.append(line)
-        if (re.match(dict_keyword['PlotStart'], line.strip()) != None  and flag==1 and site_flag==1) :#(dict_keyword['PlotStart'] in line.strip()  and flag==1 and site_flag==1) :
+        if (line.strip().startswith(dict_keyword['PlotStart'])  and flag==1 and site_flag==1) :#(dict_keyword['PlotStart'] in line.strip()  and flag==1 and site_flag==1) :
             startPlot=1
         if startPlot==1 and flag==1 and site_flag==1:
             if line != '\n':
@@ -218,7 +218,7 @@ def getAllSiteNums(each_file):
     for each_line in file.readlines():
         if TER_keyword['SiteNum'] in each_line:
             site_info.append(int(each_line[len(TER_keyword['SiteNum']):len(each_line)].strip()))
-        elif ADV_keyword['SiteNum'] in each_line:
+        elif ADV_keyword['SiteNum'] != "" and ADV_keyword['SiteNum'] in each_line:
             site_info.append(int(each_line[len(TER_keyword['SiteNum']):len(each_line)].strip()))
     unique_site_info=list(set(site_info))
     #unique_site_info=list.sort(unique_site_info)
