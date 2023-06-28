@@ -226,10 +226,10 @@ def getAllSiteNums(each_file):
     unique_site_info = []
     file = open(each_file, 'r', encoding='utf-8')
     for each_line in file.readlines():
-        if TER_keyword['SiteNum'] in each_line:
+        if TER_keyword['SiteNum'] != "" and TER_keyword['SiteNum'] in each_line:
             site_info.append(int(each_line[len(TER_keyword['SiteNum']):len(each_line)].strip()))
         elif ADV_keyword['SiteNum'] != "" and ADV_keyword['SiteNum'] in each_line:
-            site_info.append(int(each_line[len(TER_keyword['SiteNum']):len(each_line)].strip()))
+            site_info.append(int(each_line[len(ADV_keyword['SiteNum']):len(each_line)].strip()))
     unique_site_info = list(set(site_info))
     # unique_site_info=list.sort(unique_site_info)
 
